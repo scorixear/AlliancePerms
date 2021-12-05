@@ -18,7 +18,7 @@ Updates automatically if a user switches guilds within the alliance.
 ## Setup
 
 1. Pull this repo to your hosting solution
-2. Copy the `.env.sample` file and fill out the informations accordingly
+2. Copy the `.env.sample` file to `.env` and fill out the informations accordingly
 3. Edit the `/src/config.json` to fit with the Alliance Role and Permissions Roles
 4. Create a Database for this bot (and user if needed)
 5. Invite the bot to your server with the permissions given in `/src/config.json - permissions`

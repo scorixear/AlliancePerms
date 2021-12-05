@@ -11,7 +11,7 @@ declare const languageHandler: LanguageHandler;
 declare const sqlHandler: SqlHandler;
 declare const discordHandler: DiscordHandler;
 
-export default class RemoveGuild extends CommandInteractionHandle {
+export default class Register extends CommandInteractionHandle {
   constructor() {
     const commandOptions: any[] = [];
     commandOptions.push(new SlashCommandStringOption().setName('ingame_name').setDescription(languageHandler.language.commands.register.options.ingame_name).setRequired(true));

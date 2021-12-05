@@ -32,5 +32,8 @@ export default class AddGuild extends CommandInteractionHandle {
     } catch(err) {
       return;
     }
+
+    
+
   }
 }

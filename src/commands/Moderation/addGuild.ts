@@ -43,7 +43,7 @@ export default class AddGuild extends CommandInteractionHandle {
         interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.sql_error, [guildName]), ephemeral: true});
       }
     } else {
-      interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.error_desc, [guildName]), ephemeral: true});
+      interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.general_error, [guildName]), ephemeral: true});
     }
   }
 }

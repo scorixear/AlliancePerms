@@ -16,7 +16,7 @@ export default class AlbionApiHandler {
   public static async getGuildId(guildName: string) {
     const jsonResponse = await this.request(this.baseUri + this.searchQueryStr + guildName.replace(/ /, '%20'));
     if ( jsonResponse && jsonResponse.guilds && jsonResponse.guilds[0] && jsonResponse.guilds[0].Name === guildName) {
-      return jsonResponse.guilds[0].Id;
+      return jsonResponse.guilds[0].Id as string;
     }
   }
 

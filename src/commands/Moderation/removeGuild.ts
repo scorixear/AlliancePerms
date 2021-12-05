@@ -32,5 +32,11 @@ export default class RemoveGuild extends CommandInteractionHandle {
     } catch(err) {
       return;
     }
+    const guildName = interaction.options.getString('guild_name', true);
+    if (await sqlHandler.removeGuild(guildName, false)) {
+      interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.removeGuild.success, [guildName]), ephemeral: true});
+    } else {
+      interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.removeGuild.error, [guildName]), ephemeral: true});
+    }
   }
 }

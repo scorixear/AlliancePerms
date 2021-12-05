@@ -51,7 +51,7 @@ export default class SqlHandler {
     try {
       conn = await this.pool.getConnection();
       console.log('DB Connection established');
-      await conn.query('CREATE TABLE IF NOT EXISTS `users` (`userId` VARCHAR(255), `ingameName` VARCHAR(255), `guild` VARCHAR(255), PRIMARY KEY (`userId`))');
+      await conn.query('CREATE TABLE IF NOT EXISTS `users` (`userId` VARCHAR(255), `ingameName` VARCHAR(255), `guildId` VARCHAR(255), PRIMARY KEY (`userId`), UNIQUE(ingameName))');
       await conn.query('CREATE TABLE IF NOT EXISTS `guilds` (`guildId` VARCHAR(255), `guildName` VARCHAR(255), PRIMARY KEY (`guildId`))');
     } catch (error) {
       throw error;
@@ -60,8 +60,8 @@ export default class SqlHandler {
     }
   }
 
-  public async registerUser(userId: string, ingameName: string, guild: string) {
-    return await this.executeSingleQuery(`INSERT INTO users (userId, ingameName, guild) VALUES (${this.pool.escape(userId)}, ${this.pool.escape(ingameName)}, ${this.pool.escape(guild)}`);
+  public async registerUser(userId: string, ingameName: string, guildId: string) {
+    return await this.executeSingleQuery(`INSERT INTO users (userId, ingameName, guildId) VALUES (${this.pool.escape(userId)}, ${this.pool.escape(ingameName)}, ${this.pool.escape(guildId)}`);
   }
 
   public async removeUser(userId: string) {
@@ -72,7 +72,27 @@ export default class SqlHandler {
     return await this.executeSingleQuery(`INSERT INTO guilds (guildId, guildName) VALUES (${this.pool.escape(guildId)}, ${this.pool.escape(guildName)})`);
   }
 
-  public async removeGuild(guildId: string) {
-    return await this.executeSingleQuery(`DELETE FROM guilds WHERE guildId = ${this.pool.escape(guildId)}`);
+  public async removeGuild(guildName: string, printError: boolean = false) {
+    return await this.executeQueryWithCallback(async (conn)=> {
+      await conn.query(`DELETE FROM guilds WHERE guildName = ${this.pool.escape(guildName)}`);
+      return true;
+    }, async (error) => {
+      if(printError) {
+        console.error(error);
+        return false;
+      }
+    });
+  }
+
+  public async getGuild(guildId: string) {
+    return await this.executeQueryWithCallback(async (conn) => {
+      const rows = await conn.query(`SELECT guildId FROM guilds WHERE guildId = ${conn.escape(guildId)}`);
+      if(rows && rows[0]) {
+        return true;
+      }
+      return false;
+    }, async (error) => {
+      return false;
+    });
   }
 }

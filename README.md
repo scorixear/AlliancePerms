@@ -10,10 +10,10 @@ Connect Guilds and Members from Albion with your Discord server.
 
 ## Features
 
-Checks against the Albion API with the ingame character is in one of the guilds.
-Adds an alliance role to the user if above applies.
-Removes the alliance roles from user that are not in the any guild.
-Updates automatically if a user switches guilds within the alliance.
+- Checks against the Albion API with the ingame character is in one of the guilds.
+- Adds an alliance role to the user if above applies.
+- Removes the alliance roles from user that are not in the any guild.
+- Updates automatically if a user switches guilds within the alliance.
 
 ## Setup
 

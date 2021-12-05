@@ -5,6 +5,9 @@ import { Routes } from 'discord-api-types/v9';
 import config from '../config';
 import Help from '../commands/Misc/help';
 import TwoWayMap from './TwoWayMap';
+import Register from '../commands/Misc/register';
+import AddGuild from '../commands/Moderation/addGuild';
+import RemoveGuild from '../commands/Moderation/removeGuild';
 
 
 export default class InteractionHandler {
@@ -19,6 +22,9 @@ export default class InteractionHandler {
 
     const help = new Help();
     this.commandInteractions = [
+      new Register(),
+      new AddGuild(),
+      new RemoveGuild(),
       help,
     ];
     help.init(this.commandInteractions);
@@ -33,9 +39,9 @@ export default class InteractionHandler {
       console.log('Successfully registered application commands for guild', guild.id);
       const guildRoles = await guild.roles.fetch();
       const guildCommands = await guild.commands.fetch();
-      const signupRoles = guildRoles.filter(role => config.signupRoles.includes(role.name));
+      const configurationRoles = guildRoles.filter(role => config.configurationRoles.includes(role.name));
       const permissionsObject: ApplicationCommandPermissionData[] = [];
-      signupRoles.forEach(role => permissionsObject.push({
+      configurationRoles.forEach(role => permissionsObject.push({
         id: role.id,
         type: 'ROLE',
         permission: true,

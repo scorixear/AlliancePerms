@@ -2,5 +2,6 @@
   "repository": "https://github.com/scorixear/AlliancePerms",
   "botPrefix": "/",
   "version": "1.0.0",
-  "configurationRoles": [""]
+  "configurationRoles": ["Officer", "GM", "Boss Bitch", "Better Altamo", "Kaiser's Spreadsheet Machine"],
+  "allianceRole": "Alliance"
 }

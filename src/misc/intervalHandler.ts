@@ -9,7 +9,7 @@ export class IntervalHandlers {
   public static initInterval() {
     setInterval(async () => {
       await this.checkRegisteredMembers();
-    }, 1000*60);
+    }, 1000*60*60);
   }
 
   private static async checkRegisteredMembers() {

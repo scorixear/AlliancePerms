@@ -17,11 +17,11 @@ export default class AddGuild extends CommandInteractionHandle {
     const commandOptions: any[] = [];
     commandOptions.push(new SlashCommandStringOption().setName('guild_name').setDescription(languageHandler.language.commands.addGuild.options.guild_name).setRequired(true));
     super(
-      'addGuild',
+      'addguild',
       ()=>languageHandler.replaceArgs(languageHandler.language.commands.addGuild.description, [config.botPrefix]),
-      'addGuild "Kaisers Reich"',
+      'addguild "Kaisers Reich"',
       'Moderation',
-      'addGuild <Guild Name>',
+      'addguild <Guild Name>',
       commandOptions,
       true
     );
@@ -34,16 +34,18 @@ export default class AddGuild extends CommandInteractionHandle {
       return;
     }
 
+    interaction.deferReply();
+
     const guildName = interaction.options.getString('guild_name', true);
     const guildId = await AlbionApiHandler.getGuildId(guildName);
     if (guildId) {
       if(await sqlHandler.addGuild(guildId, guildName)) {
-        interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.success, [guildName]), ephemeral: true});
+        interaction.followUp({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.success, [guildName]), ephemeral: true});
       } else {
-        interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.sql_error, [guildName]), ephemeral: true});
+        interaction.followUp({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.sql_error, [guildName]), ephemeral: true});
       }
     } else {
-      interaction.reply({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.general_error, [guildName]), ephemeral: true});
+      interaction.followUp({content: languageHandler.replaceArgs(languageHandler.language.commands.addGuild.general_error, [guildName]), ephemeral: true});
     }
   }
 }

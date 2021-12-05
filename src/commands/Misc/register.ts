@@ -34,21 +34,25 @@ export default class Register extends CommandInteractionHandle {
       return;
     }
 
+    interaction.deferReply();
+
     const ingameName = interaction.options.getString("ingame_name", true);
     const guildId = await AlbionApiHandler.getPlayerGuildId(ingameName);
     if (guildId) {
       if (await sqlHandler.getGuild(guildId)) {
         if (await sqlHandler.registerUser(interaction.member.user.id, ingameName, guildId)) {
           (interaction.member as GuildMember).roles.add(config.allianceRole, "Register with ingame name " + ingameName);
-          interaction.reply({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.success, [ingameName]), ephemeral: true });
+          interaction.followUp(
+            { content: languageHandler.replaceArgs(languageHandler.language.commands.register.success, [ingameName]), ephemeral: true }
+            );
         } else {
-          interaction.reply({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.user_registered, [ingameName]), ephemeral: true })
+          interaction.followUp({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.user_registered, [ingameName]), ephemeral: true })
         }
       } else {
-        interaction.reply({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.guild_notfound, [ingameName]), ephemeral: true });
+        interaction.followUp({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.guild_notfound, [ingameName]), ephemeral: true });
       }
     } else {
-      interaction.reply({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.albion_notfound, [ingameName]), ephemeral: true });
+      interaction.followUp({ content: languageHandler.replaceArgs(languageHandler.language.commands.register.albion_notfound, [ingameName]), ephemeral: true });
     }
   }
 }

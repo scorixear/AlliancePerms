@@ -16,11 +16,11 @@ export default class RemoveGuild extends CommandInteractionHandle {
     const commandOptions: any[] = [];
     commandOptions.push(new SlashCommandStringOption().setName('guild_name').setDescription(languageHandler.language.commands.addGuild.options.guild_name).setRequired(true));
     super(
-      'removeGuild',
+      'removeguild',
       ()=>languageHandler.replaceArgs(languageHandler.language.commands.removeGuild.description, [config.botPrefix]),
-      'removeGuild "Kaisers Reich"',
+      'removeguild "Kaisers Reich"',
       'Moderation',
-      'removeGuild <Guild Name>',
+      'removeguild <Guild Name>',
       commandOptions,
       true
     );

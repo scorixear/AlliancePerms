@@ -61,7 +61,7 @@ export default class SqlHandler {
   }
 
   public async registerUser(userId: string, ingameName: string, guildId: string) {
-    return await this.executeSingleQuery(`INSERT INTO users (userId, ingameName, guildId) VALUES (${this.pool.escape(userId)}, ${this.pool.escape(ingameName)}, ${this.pool.escape(guildId)}`);
+    return await this.executeSingleQuery(`INSERT INTO users (userId, ingameName, guildId) VALUES (${this.pool.escape(userId)}, ${this.pool.escape(ingameName)}, ${this.pool.escape(guildId)})`);
   }
 
   public async removeUser(userId: string) {
@@ -74,13 +74,17 @@ export default class SqlHandler {
 
   public async removeGuild(guildName: string, printError: boolean = false) {
     return await this.executeQueryWithCallback(async (conn)=> {
-      await conn.query(`DELETE FROM guilds WHERE guildName = ${this.pool.escape(guildName)}`);
-      return true;
+      const rows = await conn.query(`SELECT * FROM guilds WHERE guildName = ${this.pool.escape(guildName)}`);
+      if(rows && rows[0]) {
+        await conn.query(`DELETE FROM guilds WHERE guildName = ${this.pool.escape(guildName)}`);
+        return true;
+      }
+      return false;
     }, async (error) => {
       if(printError) {
         console.error(error);
-        return false;
       }
+      return false;
     });
   }
 
@@ -93,6 +97,49 @@ export default class SqlHandler {
       return false;
     }, async (error) => {
       return false;
+    });
+  }
+
+  public async setGuild(userId: string, guildId: string) {
+    return await this.executeSingleQuery(`UPDATE users SET guildId = ${this.pool.escape(guildId)} WHERE userId = ${this.pool.escape(userId)}`)
+  }
+
+  public async getRegisteredMembers(): Promise<{userId: string, ingameName: string, guildId: string}[]> {
+    return await this.executeQueryWithCallback(async (conn) => {
+      const rows = await conn.query(`SELECT * from users`);
+      const result = [];
+      if(rows) {
+        for(const row of rows) {
+          result.push({
+            userId: row.userId,
+            ingameName: row.ingameName,
+            guildId: row.guildId,
+          });
+        }
+      }
+      return result;
+    }, async (error) => {
+      console.error(error);
+      return [];
+    });
+  }
+
+  public async getGuilds(): Promise<{guildId: string, guildName: string}[]> {
+    return await this.executeQueryWithCallback(async (conn) => {
+      const rows = await conn.query(`SELECT * from guilds`);
+      const result = [];
+      if(rows) {
+        for(const row of rows) {
+          result.push({
+            guildId: row.guildId,
+            guildName: row.guildName,
+          });
+        }
+      }
+      return result;
+    }, async (error) => {
+      console.error(error);
+      return [];
     });
   }
 }

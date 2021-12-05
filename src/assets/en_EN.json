@@ -17,27 +17,27 @@
     },
     "register": {
       "description": "Registers yourself to the server with your ingame name.",
-      "success": "You successfully registered yourself with the ingame name $0",
-      "user_registered": "Your ingame name \"$0\" was already registered",
-      "guild_notfound": "Your characters guild (ingame name $0) seems to be missing in our alliance",
-      "albion_notfound": "We couldn't find your ingame character $0",
+      "success": "You successfully registered yourself with the ingame name `$0`",
+      "user_registered": "Your ingame name `$0` was already registered",
+      "guild_notfound": "Your characters guild (ingame name `$0`) seems to be missing in our alliance",
+      "albion_notfound": "We couldn't find your ingame character `$0`",
       "options": {
         "ingame_name": "Your ingame name"
       }
     },
     "addGuild": {
       "description": "Adds a guild to the alliance (for this bot)",
-      "success": "Successfully added guild $0",
-      "sql_error": "ERROR: Couldn't save guild $0",
-      "general_error": "ERROR: Couldn't find guild $0 in albion",
+      "success": "Successfully added guild `$0`",
+      "sql_error": "ERROR: Couldn't save guild `$0`",
+      "general_error": "ERROR: Couldn't find guild `$0` in albion",
       "options": {
         "guild_name": "The name of the guild"
       }
     },
     "removeGuild": {
       "description": "Removes a guild from the alliance (for this bot)",
-      "success": "Successfully removed guild $0",
-      "error": "ERROR: Couldn't remove guild $0"
+      "success": "Successfully removed guild `$0`",
+      "error": "ERROR: Couldn't remove guild `$0`"
     }
   },
   "general": {

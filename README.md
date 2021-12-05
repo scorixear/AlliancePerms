@@ -23,4 +23,5 @@ Updates automatically if a user switches guilds within the alliance.
 4. Create a Database for this bot (and user if needed)
 5. Invite the bot to your server with the permissions given in `/src/config.json - permissions`
 6. Authorize the Bot with the scope `applications.commmands` _so the bot can create Slashcommands in your server_
-7. Start the bot with `npm run start`
+7. Build the bot with `npm run build`
+8. Start the bot with `npm run start`

@@ -6,7 +6,7 @@ export default class AlbionApiHandler {
   private static searchQueryStr = 'search?q='
 
   public static  async getPlayerGuildId(playerName: string) {
-    const jsonResponse = await this.request(this.baseUri+ this.searchQueryStr + playerName.replace(" ", '%20'));
+    const jsonResponse = await this.request(this.baseUri+ this.searchQueryStr + playerName.replace(/ /g, '%20'));
     if(jsonResponse && jsonResponse.players && jsonResponse.players[0] && jsonResponse.players[0].Name === playerName && jsonResponse.players[0].GuildId !== '') {
       return jsonResponse.players[0].GuildId;
     }
@@ -14,7 +14,7 @@ export default class AlbionApiHandler {
   }
 
   public static async getGuildId(guildName: string) {
-    const jsonResponse = await this.request(this.baseUri + this.searchQueryStr + guildName.replace(" ", '%20'));
+    const jsonResponse = await this.request(this.baseUri + this.searchQueryStr + guildName.replace(/ /g, '%20'));
     if ( jsonResponse && jsonResponse.guilds && jsonResponse.guilds[0] && jsonResponse.guilds[0].Name === guildName) {
       return jsonResponse.guilds[0].Id as string;
     }
